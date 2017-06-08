@@ -1,6 +1,6 @@
 class Expression
   attr_accessor :args
-
+#* mean multiple parameters: 'Splat operator'
   def initialize(*args)
     if args.length == 1 && args[0].class == Array
       @args = args.first

@@ -26,6 +26,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   pry
@@ -33,4 +34,4 @@ DEPENDENCIES
   ruby_deep_clone
 
 BUNDLED WITH
-   1.14.6
+   1.15.1
