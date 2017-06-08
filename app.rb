@@ -8,6 +8,7 @@ require './lib/factory'
 include Factory
 
 require './lib/string'
+require './lib/filter'
 
 #FOR TESTING MAKE SURE TO REMOVE!
 require 'pry'
