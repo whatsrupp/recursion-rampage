@@ -17,7 +17,7 @@ class String
     # simpler minus_regex? /-?(\w+)/
 
     #Returns single letters and clumped digits both with or without negative
-    mult_regex = /-?(\d+|\w)/
+    mult_regex = /-?(?:\d+|\w)/
 
     #finds the \frac brackets needs to change to only count 2
     div_regex = /\\frac{.*}/
@@ -30,23 +30,31 @@ class String
     string = self
     # remove plusses from string and return an array of each part
     # GOAL
+
+    if !!(mult_regex =~ string)
+      matched_content = string.scan(mult_regex)
+      mult_equation_arguments = matched_content.join(', ')
+      string = 'mult(' + mult_equation_arguments + ')'
+    end
+
     if !!(/-/ =~ string)
       string.gsub!(/-/,'+-')
     end
 
     if !!(/\+/ =~ string)
-      matchedContent = string.scan(/[^\+]+/)
+      matched_content = string.scan(/[^\+]+/)
 
-      add_equation_arguments = matchedContent.join(', ')
+      add_equation_arguments = matched_content.join(', ')
       string = 'add(' + add_equation_arguments +')'
 
     end
 
     if !!(/[A-Za-z]/=~ string)
-      matchedContent = string.scan(/(?<=add\().+(?=\))/)
+      # matchedContent = string.scan(/(?<=add\().+(?=\))/)
       string.gsub!(/[A-Za-z]/,'\'\0\'')
       string.gsub!("'a''d''d'",'add')
-      binding.pry
+      string.gsub!("'m''u''l''t'",'mult')
+
     end
 
     eval(string)
