@@ -1,24 +1,64 @@
 
 class String
   def objectify
-    input = self
+
+    # BIDMAS
+    #EVALUATE FROM LEFT TO RIGHT
+    #Subtraction Last
+
+    #Returns everything clumped between plusses but not plusses
     add_regex = /[^\+]+/
+    check_for_minuses=/-/
+    #Returns only digits including minus digits
     digit_regex = /[\-|\d]/
+
+    #
     minus_regex = /(?:\-.*?(?=-))|(?:\-.*)/
+    # simpler minus_regex? /-?(\w+)/
 
-    negatives = !!/\-/.match(input)
+    #Returns single letters and clumped digits both with or without negative
+    mult_regex = /-?(\d+|\w)/
 
-    filter_out_plus = input.scan(add_regex)
-    if negatives
-      quicktest = filter_out_plus.map! { |e|  !!/\-/.match(e)? e.scan(minus_regex) : e }.flatten!
+    #finds the \frac brackets needs to change to only count 2
+    div_regex = /\\frac{.*}/
+    #Finds everything between curly braces
+    curly_extract_regex =/[^{]+(?=})/
+
+    # negatives = !!/\-/.match(input)
+
+    # assign input string into a variable
+    string = self
+    # remove plusses from string and return an array of each part
+    # GOAL
+    if !!(/-/ =~ string)
+      string.gsub!(/-/,'+-')
     end
-    filter_out_plus.map! { |entry|  entry.match(digit_regex) ?  entry.to_i : entry  }
 
-    add(filter_out_plus)
+    if !!(/\+/ =~ string)
+      matchedContent = string.scan(/[^\+]+/)
+
+      add_equation_arguments = matchedContent.join(', ')
+      string = 'add(' + add_equation_arguments +')'
+
+    end
+
+    if !!(/[A-Za-z]/=~ string)
+      matchedContent = string.scan(/(?<=add\().+(?=\))/)
+      string.gsub!(/[A-Za-z]/,'\'\0\'')
+      string.gsub!("'a''d''d'",'add')
+      binding.pry
+    end
+
+    eval(string)
+
+    #
+    # filter_out_plus = input.scan(add_regex)
+    # if negatives
+    #   quicktest = filter_out_plus.map! { |e|  !!/\-/.match(e)? e.scan(minus_regex) : e }.flatten!
+    # end
+    # filter_out_plus.map! { |entry|  entry.match(digit_regex) ?  entry.to_i : entry  }
+    #
+    # add(filter_out_plus)
   end
-
-
-
-
 
 end
