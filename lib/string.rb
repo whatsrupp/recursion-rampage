@@ -30,43 +30,38 @@ class String
     string = self
     # remove plusses from string and return an array of each part
     # GOAL
-
+    output = nil
     if needs_mult_simplification(string)
       matched_content = string.scan(mult_regex)
       mult_equation_arguments = matched_content.join(', ')
-      string = 'mult(' + mult_equation_arguments + ')'
+      if  /(-)[a-zA-Z]/ =~ mult_equation_arguments
+        mult_equation_arguments.gsub!(/-(?=[a-zA-Z])/, '\01, ')
+      end
+
+      string = 'mtp(' + mult_equation_arguments + ')'
+
+      return eval(string.clean)
     end
 
-    if !!(/-/ =~ string)
+    if needs_add_simplification(string)
       string.gsub!(/-/,'+-')
-    end
-
-    if !!(/\+/ =~ string)
       matched_content = string.scan(/[^\+]+/)
-
       add_equation_arguments = matched_content.join(', ')
       string = 'add(' + add_equation_arguments +')'
-
+      return eval(string.clean)
     end
 
-    if !!(/[A-Za-z]/=~ string)
-      # matchedContent = string.scan(/(?<=add\().+(?=\))/)
-      string.gsub!(/[A-Za-z]/,'\'\0\'')
-      string.gsub!("'a''d''d'",'add')
-      string.gsub!("'m''u''l''t'",'mult')
-
-    end
-
-    eval(string)
-
-    #
-    # filter_out_plus = input.scan(add_regex)
-    # if negatives
-    #   quicktest = filter_out_plus.map! { |e|  !!/\-/.match(e)? e.scan(minus_regex) : e }.flatten!
-    # end
-    # filter_out_plus.map! { |entry|  entry.match(digit_regex) ?  entry.to_i : entry  }
-    #
-    # add(filter_out_plus)
   end
 
+
+  def clean
+    #surrounds all letters in quotes and leaves all digits alone
+    if !!(/[A-Za-z]/=~ self)
+      # matchedContent = string.scan(/(?<=add\().+(?=\))/)
+      self.gsub!(/[A-Za-z]/,'\'\0\'')
+      self.gsub!("'a''d''d'",'add')
+      self.gsub!("'m''t''p'",'mtp')
+    end
+    return self
+  end
 end

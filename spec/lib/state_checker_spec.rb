@@ -26,6 +26,12 @@ describe 'StateChecker' do
         expect(state_checker.needs_add_simplification('-22')).to eq false
 
       end
+
+      it 'false check' do
+        test_string = 'mtp(-2, a, y)'
+        expect(state_checker.needs_mult_simplification(test_string)).to eq false
+
+      end
     end
   end
   describe '#needs_mult_simplificatino?' do

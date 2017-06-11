@@ -2,6 +2,7 @@ module StateChecker
 
 
   def needs_add_simplification(string)
+    string = string.dup
     plus_regex = /\+/
     minus_regex = /-/
     string[0] = '' if (/-/ =~ string) == 0
