@@ -5,7 +5,9 @@ require './models/division'
 require './models/power'
 
 require './lib/factory'
+require './lib/state_checker'
 include Factory
+include StateChecker
 
 require './lib/string'
 require './lib/state_checker'

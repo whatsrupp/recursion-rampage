@@ -1,11 +1,11 @@
 
 class String
+
   def objectify
 
     # BIDMAS
     #EVALUATE FROM LEFT TO RIGHT
     #Subtraction Last
-
     #Returns everything clumped between plusses but not plusses
     add_regex = /[^\+]+/
     check_for_minuses=/-/
@@ -31,7 +31,7 @@ class String
     # remove plusses from string and return an array of each part
     # GOAL
 
-    if !!(mult_regex =~ string)
+    if needs_mult_simplification(string)
       matched_content = string.scan(mult_regex)
       mult_equation_arguments = matched_content.join(', ')
       string = 'mult(' + mult_equation_arguments + ')'
