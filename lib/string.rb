@@ -33,48 +33,51 @@ class String
     # remove plusses from string and return an array of each part
     # GOAL
     output = nil
-
-    if needs_div_simplification(string)
-      matched_content = string.scan(curly_extract_regex)
-      div_equation_arguments = matched_content.join(', ')
-      string = 'div(' + div_equation_arguments + ')'
-      return eval(string.clean)
-    end
-
-    if needs_mult_simplification(string)
-      matched_content = string.scan(mult_regex)
-      mult_equation_arguments = matched_content.join(', ')
-      if  /(-)[a-zA-Z]/ =~ mult_equation_arguments
-        mult_equation_arguments.gsub!(/-(?=[a-zA-Z])/, '\01, ')
+    if needs_simplification(string)
+      if needs_div_simplification(string)
+        matched_content = string.scan(curly_extract_regex)
+        div_expression = div(matched_content)
+        # div_equation_arguments = matched_content.join(', ')
+        # string = 'div(' + div_equation_arguments + ')'
+        return recall_objectify(div_expression)
       end
 
-      string = 'mtp(' + mult_equation_arguments + ')'
+      if needs_mult_simplification(string)
+        matched_content = string.scan(mult_regex)
+        mult_equation_arguments = matched_content.join("', '")
 
-      return eval(string.clean)
-    end
+        if  /(-)[a-zA-Z]/ =~ mult_equation_arguments
+          mult_equation_arguments.gsub!(/-(?=[a-zA-Z])/, '\01\', \'')
+        end
 
-    if needs_add_simplification(string)
-      string.gsub!(/-/,'+-')
-      matched_content = string.scan(/[^\+]+/)
-      add_equation_arguments = matched_content.join(', ')
-      string = 'add(' + add_equation_arguments +')'
-      return eval(string.clean)
+        string = "mtp('" + mult_equation_arguments + "')"
+
+        return recall_objectify(eval(string))
+      end
+
+      if needs_add_simplification(string)
+        string.gsub!(/-/,'+-')
+        matched_content = string.scan(/[^\+]+/)
+        add_expression = add(matched_content)
+        # add_equation_arguments = matched_content.join(', ')
+        # string = 'add(' + add_equation_arguments +')'
+        return recall_objectify(add_expression)
+      end
+    else
+      return string
     end
 
   end
 
-
-  def clean
-    #surrounds all letters in quotes and leaves all digits alone
-    if !!(/[A-Za-z]/=~ self)
-      # matchedContent = string.scan(/(?<=add\().+(?=\))/)
-      self.gsub!(/[A-Za-z]/,'\'\0\'')
-      self.gsub!("'a''d''d'",'add')
-      self.gsub!("'m''t''p'",'mtp')
-      self.gsub!("'d''i''v'",'div')
-
+  def recall_objectify (expression)
+    expression.args.each_with_index do |string, i|
+      if needs_simplification(string)
+        expression.args[i] = string.objectify
+      else
+        expression.args[i]= string.to_i if /\d/=~string
+      end
     end
-    return self
+    return expression
   end
 
 end

@@ -27,14 +27,14 @@ describe 'StateChecker' do
 
       end
 
-      it 'false check' do
-        test_string = 'mtp(-2, a, y)'
+      it 'returns false when there is a unary operator' do
+        test_string = '+@'
         expect(state_checker.needs_mult_simplification(test_string)).to eq false
-
       end
     end
   end
-  describe '#needs_mult_simplificatino?' do
+
+  describe '#needs_mult_simplification?' do
     it 'true if negative next to a letter' do
       test_string = '-a'
       expect(state_checker.needs_mult_simplification(test_string)).to eq true
@@ -52,6 +52,22 @@ describe 'StateChecker' do
     it 'false when appropriate' do
       test_string = '-1-3'
       expect(state_checker.needs_mult_simplification(test_string)).to eq false
+    end
+    it 'true if number is next to a trailing bracket'do
+      test_string = '3(1+1)'
+      expect(state_checker.needs_mult_simplification(test_string)).to eq true
+    end
+    it 'true if number is next to a trailing bracket'do
+      test_string = 'a(1+1)'
+      expect(state_checker.needs_mult_simplification(test_string)).to eq true
+    end
+    it 'true if number is next to a leading bracket'do
+      test_string = '(1+1)a'
+      expect(state_checker.needs_mult_simplification(test_string)).to eq true
+    end
+    it 'true if number is next to a leading bracket'do
+      test_string = '(1+1)2'
+      expect(state_checker.needs_mult_simplification(test_string)).to eq true
     end
   end
 
