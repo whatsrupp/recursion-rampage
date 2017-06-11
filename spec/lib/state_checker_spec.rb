@@ -54,4 +54,26 @@ describe 'StateChecker' do
       expect(state_checker.needs_mult_simplification(test_string)).to eq false
     end
   end
+
+  describe '#needs_div_simplification' do
+    it 'returns true only when there is a \frac{}{}' do
+      test_string = '\frac{-14}{25}'
+      expect(state_checker.needs_div_simplification(test_string)).to eq true
+    end
+  end
+
+  describe '#needs_simplification' do
+    it 'makes a call to needs_div_simplification' do
+      test_string = '\frac{-14}{25}'
+      expect(state_checker.needs_simplification(test_string)).to eq true
+    end
+
+    it 'makes a call to needs_mult_simplification' do
+      test_string = '-a'
+      expect(state_checker.needs_simplification(test_string)).to eq true
+    end
+    it 'makes a call to needs_add_simplification' do
+      expect(state_checker.needs_add_simplification('-22-5')).to eq true
+    end
+  end
 end

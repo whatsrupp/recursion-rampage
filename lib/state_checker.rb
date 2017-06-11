@@ -15,4 +15,16 @@ module StateChecker
     mult_regex = /[a-zA-Z][\d]|[\d][a-zA-Z]|-[a-zA-Z]/
     !!(mult_regex =~ string)
   end
+
+  def needs_div_simplification(string)
+    div_regex = /\\frac{.+}{.+}/
+    !!(div_regex =~ string)
+  end
+
+  def needs_simplification(string)
+    return true if needs_div_simplification(string)
+    return true if needs_mult_simplification(string)
+    return true if needs_add_simplification(string)
+    return false
+  end
 end

@@ -28,9 +28,19 @@ class String
 
     # assign input string into a variable
     string = self
+    expression = [string]
+
     # remove plusses from string and return an array of each part
     # GOAL
     output = nil
+
+    if needs_div_simplification(string)
+      matched_content = string.scan(curly_extract_regex)
+      div_equation_arguments = matched_content.join(', ')
+      string = 'div(' + div_equation_arguments + ')'
+      return eval(string.clean)
+    end
+
     if needs_mult_simplification(string)
       matched_content = string.scan(mult_regex)
       mult_equation_arguments = matched_content.join(', ')
@@ -61,7 +71,10 @@ class String
       self.gsub!(/[A-Za-z]/,'\'\0\'')
       self.gsub!("'a''d''d'",'add')
       self.gsub!("'m''t''p'",'mtp')
+      self.gsub!("'d''i''v'",'div')
+
     end
     return self
   end
+
 end
