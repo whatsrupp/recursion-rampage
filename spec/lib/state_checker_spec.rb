@@ -27,6 +27,11 @@ describe 'StateChecker' do
 
       end
 
+      it 'returns false when division string is inside ' do
+        test_string = '\\frac{-14}{25}'
+        expect(state_checker.needs_mult_simplification(test_string)).to eq false
+      end
+
       it 'returns false when there is a unary operator' do
         test_string = '+@'
         expect(state_checker.needs_mult_simplification(test_string)).to eq false
