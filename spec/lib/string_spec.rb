@@ -94,75 +94,75 @@ describe String do
       end
     end
     #
-    # context 'mixed stack lvl 3' do
-    #   it 'objectifies 2(x+\frac{3}{y})w' do
-    #     input = '2(x+\frac{3}{y})w'
-    #     expected_output = mtp(2,add('x',div(3,'y')),'w')
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{21a+3}{\frac{-14a}{2+x}-(b+d)}' do
-    #     input = '\frac{21a+3}{\frac{-14a}{2+x}-(b+d)}'
-    #     expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(2,
-    #       'x')),mtp(-1,add('b','d'))))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
-    #
-    # context 'can handle insane stacks' do
-    #   it 'objectifies \frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}' do
-    #     input = '\frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}'
-    #     expected_output = div(add(mtp(21,'a'),3),add(4,mtp(-1,
-    #       add(mtp(2,add('x',div(3,'y')),'w'),'d'))))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}' do
-    #     input = '\frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}'
-    #     expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(mtp(2,
-    #       add('x',div(3,'y')),'w'),'x')),mtp(-1,add('b','d'))))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
-    #
-    # context 'power' do
-    #   it 'objectifies x^2' do
-    #     input = 'x^2'
-    #     expected_output = pow('x', 2)
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies (2x)^34' do
-    #     input = '(2x)^34'
-    #     expected_output = mtp(pow(mtp(2, 'x'), 3),4)  #this is intended as LaTeX
-    #     # interprets the string in the same way.
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies (2x)^{34}' do
-    #     input = '(2x)^{34}'
-    #     expected_output = pow(mtp(2, 'x'), 34)
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies x^{1+1}' do
-    #     input = 'x^{2+y}'
-    #     expected_output = pow('x', add(2, 'y'))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies (a^{2+x})^4' do
-    #     input = '(a^{2+x})^4'
-    #     expected_output = pow(pow('a',add(2,'x')),4)
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectify some monstrocity with powers' do
-    #     input = '(3(x+\frac{3\frac{3}{x}+5}{4+5+a})+4)^{2(x+\frac{3}{y})w}'
-    #     expected_output = pow(add(mtp(3,add('x',div(add(mtp(3,div(3,'x')),5),
-    #       add(4,5,'a')))),4),mtp(2,add('x',div(3,'y')),'w'))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
+    context 'mixed stack lvl 3' do
+      it 'objectifies 2(x+\frac{3}{y})w' do
+        input = '2(x+\frac{3}{y})w'
+        expected_output = mtp(2,add('x',div(3,'y')),'w')
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{21a+3}{\frac{-14a}{2+x}-(b+d)}' do
+        input = '\frac{21a+3}{\frac{-14a}{2+x}-(b+d)}'
+        expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(2,
+          'x')),mtp(-1,add('b','d'))))
+        expect(input.objectify).to eq expected_output
+      end
+    end
+
+    context 'can handle insane stacks' do
+      it 'objectifies \frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}' do
+        input = '\frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}'
+        expected_output = div(add(mtp(21,'a'),3),add(4,mtp(-1,
+          add(mtp(2,add('x',div(3,'y')),'w'),'d'))))
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}' do
+        input = '\frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}'
+        expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(mtp(2,
+          add('x',div(3,'y')),'w'),'x')),mtp(-1,add('b','d'))))
+        expect(input.objectify).to eq expected_output
+      end
+    end
+
+    context 'power' do
+      it 'objectifies x^2' do
+        input = 'x^2'
+        expected_output = pow('x', 2)
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies (2x)^34' do
+        input = '(2x)^34'
+        expected_output = mtp(pow(mtp(2, 'x'), 3),4)  #this is intended as LaTeX
+        # interprets the string in the same way.
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies (2x)^{34}' do
+        input = '(2x)^{34}'
+        expected_output = pow(mtp(2, 'x'), 34)
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies x^{1+1}' do
+        input = 'x^{2+y}'
+        expected_output = pow('x', add(2, 'y'))
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies (a^{2+x})^4' do
+        input = '(a^{2+x})^4'
+        expected_output = pow(pow('a',add(2,'x')),4)
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectify some monstrocity with powers' do
+        input = '(3(x+\frac{3\frac{3}{x}+5}{4+5+a})+4)^{2(x+\frac{3}{y})w}'
+        expected_output = pow(add(mtp(3,add('x',div(add(mtp(3,div(3,'x')),5),
+          add(4,5,'a')))),4),mtp(2,add('x',div(3,'y')),'w'))
+        expect(input.objectify).to eq expected_output
+      end
+    end
   end
 end
