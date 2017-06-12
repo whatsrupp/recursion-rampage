@@ -9,8 +9,11 @@ require './lib/state_checker'
 include Factory
 include StateChecker
 
-require './lib/string'
+# require './lib/string'
 require './lib/state_checker'
+require './lib/math_regexes'
+require './lib/neat_string'
+
 
 #FOR TESTING MAKE SURE TO REMOVE!
 require 'pry'
