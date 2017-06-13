@@ -10,6 +10,7 @@ require './lib/classifier'
 include Factory
 include StateChecker
 include Classifier
+require './lib/simplifier'
 
 
 # require './lib/string'
