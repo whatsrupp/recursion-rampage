@@ -2,7 +2,6 @@
 class String
 
   def objectify
-    binding.pry
     # BIDMAS
     #EVALUATE FROM LEFT TO RIGHT
     #Subtraction Last
@@ -39,7 +38,7 @@ class String
       #scans through and looks for brackets and curlys
       string.gsub!(non_bracket_mult_regex, '(\0)')
       matched_content = string.scan(initial_regex)
-      matched_co/ntent.flatten!
+      matched_content.flatten!
       matched_content.compact!
       #[array, of, the matches]
       unique_substitution = '$'

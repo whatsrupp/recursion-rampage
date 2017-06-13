@@ -15,7 +15,7 @@ include Classifier
 # require './lib/string'
 require './lib/state_checker'
 require './lib/math_regexes'
-require './lib/neat_string'
+require './lib/string'
 
 
 #FOR TESTING MAKE SURE TO REMOVE!
