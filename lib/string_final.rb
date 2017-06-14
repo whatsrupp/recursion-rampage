@@ -2,15 +2,40 @@ class String
 
 
   def objectify
+    if needs_div_simplification?
+      p 'yo'
+      div = objectify_division
+      return div
+    end
+
     if needs_add_simplification?
       add = objectify_addition
       return add
     end
+
     if needs_mult_simplification?
       mult = objectify_multiplication
-
       return mult
     end
+  end
+
+  def objectify_division
+    simplified = simplify_expression
+    division_args = simplified[:matches]
+    cleaned_args=clean_args(division_args)
+    div_expression = div(cleaned_args)
+  end
+
+  def simplify_expression
+    string = self.dup
+    simplify = Simplify.new(string)
+    simplified_expression = simplify.expression
+    replaced_content = simplify.replaced_content
+    output = {
+      expression: simplified_expression,
+      matches: replaced_content
+    }
+    return output
   end
 
   def objectify_multiplication
@@ -24,8 +49,8 @@ class String
   end
 
   def needs_div_simplification?
-    simplify = Simplify.new(self)
-    simplify.expression == "£"
+    simplified = simplify_expression
+    simplified[:expression] == "£"
   end
 
   def needs_mult_simplification?

@@ -30,6 +30,7 @@ class Simplify
       end
     end
     return string
+
   end
 
   def fractions
@@ -55,6 +56,7 @@ class Simplify
 
     string.gsub!('\\frac$$', '\\frac{$}{$}')
   end
+
 
   def parentheses
     simplified_string = parentheses_content

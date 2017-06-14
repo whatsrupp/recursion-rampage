@@ -54,25 +54,25 @@ describe String do
       end
     end
 
-    # context 'division' do
-    #   it 'objectifies \frac{-14}{25}' do
-    #     input = '\frac{-14}{25}'
-    #     expected_output = div(-14, 25)
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{a}{d}' do
-    #     input = '\frac{a}{d}'
-    #     expected_output = div('a', 'd')
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{x}{-25}' do
-    #     input = '\frac{x}{-25}'
-    #     expected_output = div('x', -25)
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
+    context 'division' do
+      it 'objectifies \frac{-14}{25}' do
+        input = '\frac{-14}{25}'
+        expected_output = div(-14, 25)
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{a}{d}' do
+        input = '\frac{a}{d}'
+        expected_output = div('a', 'd')
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{x}{-25}' do
+        input = '\frac{x}{-25}'
+        expected_output = div('x', -25)
+        expect(input.objectify).to eq expected_output
+      end
+    end
 
     # context 'mixed stack lvl 2' do
     #   it 'objectifies \frac{-14a}{2+x}' do
