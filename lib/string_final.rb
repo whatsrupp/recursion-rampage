@@ -20,7 +20,7 @@ class String
 
   def objectify_division
     simplified = simplify_expression
-    division_args = simplified[:matches]
+    division_args = simplified[:matches][:fractions]
 
     div_expression = div(division_args)
     p div_expression
@@ -34,8 +34,9 @@ class String
     string.gsub!(/-/,'+-')
     add_equation_args = string.scan(/[^\+]+/)
     add_equation_args.each_with_index do |string, i|
-      # add_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
-      add_equation_args[i].gsub!(/\$/) {  '('+matches.shift+')'  }
+      add_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
+      add_equation_args[i].gsub!(/\{\$\}/) {  '{'+matches[:fractions].shift+'}'  }
+      add_equation_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
     end
     add_expression = add(add_equation_args)
     p add_expression
@@ -62,12 +63,14 @@ class String
     string = simplified[:expression]
     matches = simplified[:matches]
 
-    string.sub!(/-/, '-1') if (string =~ /-[a-zA-Z]/) == 0
+    string.sub!(/-/, '-1') if (string =~ /-[a-zA-Z$£]/) == 0
     mult_args_regex = /-?[a-zA-Z$£]|-?[0-9]+/
     mult_equation_args = string.scan(mult_args_regex)
     mult_equation_args.each_with_index do |string, i|
-      # add_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
-      mult_equation_args[i].gsub!(/\$/) {  '('+matches.shift+')'  }
+      mult_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
+      mult_equation_args[i].gsub!(/\{\$\}/) {  '{'+matches[:parentheses].shift+'}'  }
+
+      mult_equation_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
     end
     mult_expression = mtp(mult_equation_args)
     p mult_expression
@@ -133,7 +136,6 @@ class String
     #this is order dependent
     internal_string = simplify.extract_string_between('(',')')
     simplified = simplify.expression
-    matches = simplify.replaced_content
 
     if simplified == '$'
       return internal_string

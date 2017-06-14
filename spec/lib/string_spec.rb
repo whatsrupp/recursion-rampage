@@ -94,37 +94,37 @@ describe String do
       end
     end
     # #
-    # context 'mixed stack lvl 3' do
-    #   it 'objectifies 2(x+\frac{3}{y})w' do
-    #     input = '2(x+\frac{3}{y})w'
-    #     expected_output = mtp(2,add('x',div(3,'y')),'w')
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{21a+3}{\frac{-14a}{2+x}-(b+d)}' do
-    #     input = '\frac{21a+3}{\frac{-14a}{2+x}-(b+d)}'
-    #     expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(2,
-    #       'x')),mtp(-1,add('b','d'))))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
-    #
-    # context 'can handle insane stacks' do
-    #   it 'objectifies \frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}' do
-    #     input = '\frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}'
-    #     expected_output = div(add(mtp(21,'a'),3),add(4,mtp(-1,
-    #       add(mtp(2,add('x',div(3,'y')),'w'),'d'))))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}' do
-    #     input = '\frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}'
-    #     expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(mtp(2,
-    #       add('x',div(3,'y')),'w'),'x')),mtp(-1,add('b','d'))))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
-    #
+    context 'mixed stack lvl 3' do
+      it 'objectifies 2(x+\frac{3}{y})w' do
+        input = '2(x+\frac{3}{y})w'
+        expected_output = mtp(2,add('x',div(3,'y')),'w')
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{21a+3}{\frac{-14a}{2+x}-(b+d)}' do
+        input = '\frac{21a+3}{\frac{-14a}{2+x}-(b+d)}'
+        expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(2,
+          'x')),mtp(-1,add('b','d'))))
+        expect(input.objectify).to eq expected_output
+      end
+    end
+
+    context 'can handle insane stacks' do
+      it 'objectifies \frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}' do
+        input = '\frac{21a+3}{4-(2(x+\frac{3}{y})w+d)}'
+        expected_output = div(add(mtp(21,'a'),3),add(4,mtp(-1,
+          add(mtp(2,add('x',div(3,'y')),'w'),'d'))))
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}' do
+        input = '\frac{21a+3}{\frac{-14a}{2(x+\frac{3}{y})w+x}-(b+d)}'
+        expected_output = div(add(mtp(21,'a'),3),add(div(mtp(-14,'a'),add(mtp(2,
+          add('x',div(3,'y')),'w'),'x')),mtp(-1,add('b','d'))))
+        expect(input.objectify).to eq expected_output
+      end
+    end
+
     # context 'power' do
     #   it 'objectifies x^2' do
     #     input = 'x^2'
