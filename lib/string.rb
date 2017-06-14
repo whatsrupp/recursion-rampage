@@ -18,7 +18,7 @@ class String
     #Returns single letters and clumped digits both with or without negative
     mult_regex = /-?(?:\d+|\w|\$)/
     mult_filter_regex = /(\([^\)]+\)+)/
-    non_bracket_mult_regex = /(?:[0-9]+[a-zA-Z](?:[\w]+)?)|(?:[a-zA-Z]+[0-9]+(?:[\w]+)?)/
+    non_bracket_mult_regex = /(?:[0-9]+[a-zA-Z](?:[\w]*))|(?:[a-zA-Z]+[0-9]+(?:[\w]*))/
     #finds the \frac brackets needs to change to only count 2
     div_regex = /\\frac{.*}/
     #Finds everything between curly braces

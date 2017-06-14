@@ -10,7 +10,7 @@ module MathRegexes
   minus_regex = /(?:\-.*?(?=-))|(?:\-.*)/
   mult_regex = /-?(?:\d+|\w|\$)/
   mult_filter_regex = /(\([^\)]+\)+)/
-  non_bracket_mult_regex = /(?:[0-9]+[a-zA-Z](?:[\w]+)?)|(?:[a-zA-Z]+[0-9]+(?:[\w]+)?)/
+  non_bracket_mult_regex = /(?:[0-9]+[a-zA-Z](?:[\w]*))|(?:[a-zA-Z]+[0-9]+(?:[\w]*))/
   div_regex = /\\frac{.*}/
   between_curly_regex =/[^{]+(?=})/
   between_parentheses_regex = /\(([^\)]+)\)/

@@ -29,4 +29,26 @@ describe 'Simplifier' do
       expect(simplify.fraction(test_string)).to eq result
     end
   end
+
+  describe '#parentheses_content' do
+    it 'simplifies the contents of parentheses' do
+      test_string = '2(a)b'
+      result = '2($)b'
+      expect(simplify.parentheses_content(test_string)).to eq result
+    end
+    it 'simplifies the contents of parentheses with nesting' do
+      test_string = '2(a(a(b)(sx)))b'
+      result = '2($)b'
+      expect(simplify.parentheses_content(test_string)).to eq result
+    end
+  end
+
+  describe '#parentheses' do
+    it 'simplifies the entire parentheses' do
+      test_string = '2(a)b'
+      result = '2$b'
+      expect(simplify.parentheses(test_string)).to eq result
+
+    end
+  end
 end
