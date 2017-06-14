@@ -28,9 +28,9 @@ describe 'Simplifier' do
       result = '$'
       expect(simplify.fractions).to eq result
     end
-    it 'simplifies non-nested fractions' do
+    it 'simplifies 1 non-nested fraction' do
       simplify = Simplify.new('\frac{a}{a}\frac{a}{b}')
-      result = '$$'
+      result = '$\frac{a}{b}'
       expect(simplify.fractions).to eq result
     end
   end
@@ -56,31 +56,24 @@ describe 'Simplifier' do
 
     end
 
-    it 'simplifies multiple parentheses' do
+    it 'simplifies only 1 parentheses' do
       simplify = Simplify.new('2(a)(b)+1(a)')
-      result = '2$$+1$'
+      result = '2$(b)+1(a)'
       expect(simplify.parentheses).to eq result
     end
-  end
 
-  describe 'multiplications' do
-    it 'simplifies basic multipliers' do
-      simplify = Simplify.new('2ab+3a')
-      result = '$+$'
-      expect(simplify.multiplications).to eq result
-    end
-
-    it 'simplifies the replacement symbol' do
-      simplify = Simplify.new('2$a+3$$$a')
-      result = '$+$'
-      expect(simplify.multiplications).to eq result
+    it 'simplifies one per repetition' do
+      simplify = Simplify.new('2(a)(b)+1(a)')
+      result = '2$$+1(a)'
+      simplify.parentheses
+      expect(simplify.parentheses).to eq result
     end
   end
 
   describe '#expression' do
     it 'handles mixed stacks ' do
       simplify = Simplify.new('2\frac{}{}(\frac{a}{b})+1(a)')
-      result = '$+$'
+      result = '2$$+1$'
       expect(simplify.expression).to eq result
     end
 

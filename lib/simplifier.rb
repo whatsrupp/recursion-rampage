@@ -1,34 +1,41 @@
 class Simplify
 
+  #Take an expression string and replace the top level parentheses and  fractions with
+  #unique symbols
+
   attr_reader :replaced_content
   attr_reader :string
 
   def initialize (string)
     @replaced_content = []
-    @initial_string = string
+    @initial_string = string.dup
     @string = string
   end
 
   def expression
-    fractions
-    parentheses
-    multiplications
+    string_search
   end
 
-  def multiplications
-    non_bracket_mult_regex = /(?:[0-9$]+[a-zA-Z$](?:[\w]*))|(?:[a-zA-Z$]+[0-9$]+(?:[\w]*))/
-    string.gsub!(non_bracket_mult_regex, '(\0)')
-    parentheses
+  def string_search
+    @string.each_char do |character|
+      p character
+      if character == '\\'
+        fractions
+        string_search
+        break
+      elsif character == '('
+        parentheses
+        string_search
+        break
+      end
+    end
+    return string
   end
 
   def fractions
     simplified_bracket_string = fraction_brackets
     simplified_bracket_string.gsub!('\frac{$}{$}', '$')
-    store_matches('\frac{$}{$}')
-    more_fractions = !!(/\\frac{/ =~ simplified_bracket_string)
-    return fractions if more_fractions
     simplified_bracket_string
-
   end
 
   def store_matches(matched_string)
@@ -40,10 +47,12 @@ class Simplify
     store_matches(first_bracket_string)
     first_bracket_string = '\frac{'+first_bracket_string+'}'
     string.sub!(first_bracket_string, '\frac$')
+
     second_bracket_string = extract_string_between('{','}')
-    second_bracket_string = '{'+second_bracket_string+'}'
     store_matches(second_bracket_string)
+    second_bracket_string = '{'+second_bracket_string+'}'
     string.sub!(second_bracket_string, '$')
+
     string.gsub!('\\frac$$', '\\frac{$}{$}')
   end
 
@@ -51,7 +60,6 @@ class Simplify
     simplified_string = parentheses_content
     string.gsub!('($)','$')
     more_parentheses = !!(/\(/ =~ string)
-    return parentheses if more_parentheses
     simplified_string
   end
 
