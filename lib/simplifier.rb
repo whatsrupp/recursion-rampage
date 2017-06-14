@@ -1,27 +1,41 @@
 class Simplify
 
-  def simplify(string)
-    fraction_brackets(string)
+  def expression(string)
+    fractions(string)
+    parentheses(string)
+    multiplications(string)
   end
 
-  def fraction (string)
+  def multiplications(string)
+    non_bracket_mult_regex = /(?:[0-9$]+[a-zA-Z$](?:[\w]*))|(?:[a-zA-Z$]+[0-9$]+(?:[\w]*))/
+    string.gsub!(non_bracket_mult_regex, '(\0)')
+    parentheses(string)
+  end
+
+  def fractions (string)
     simplified_bracket_string = fraction_brackets(string)
     simplified_bracket_string.gsub!('\frac{$}{$}', '$')
+    more_fractions = !!(/\\frac{/ =~ simplified_bracket_string)
+    return fractions(simplified_bracket_string) if more_fractions
+    simplified_bracket_string
   end
 
   def fraction_brackets(string)
     first_bracket_string = extract_string_between_curly_bracket(string)
     first_bracket_string = '\frac'+first_bracket_string
-    string.gsub!(first_bracket_string, '\frac$')
+    test = string.sub(first_bracket_string, '\frac$')
+    string.sub!(first_bracket_string, '\frac$')
     second_bracket_string = extract_string_between_curly_bracket(string)
-    string.gsub!(second_bracket_string, '$')
-    string.gsub!('{$}', '$')
-    string.gsub!('$','{$}')
+    string.sub!(second_bracket_string, '$')
+    string.gsub!('\\frac$$', '\\frac{$}{$}')
   end
 
   def parentheses(string)
     simplified_string = parentheses_content(string)
     string.gsub!('($)','$')
+    more_parentheses = !!(/\(/ =~ string)
+    return parentheses(simplified_string) if more_parentheses
+    simplified_string
   end
 
   def parentheses_content(string)
