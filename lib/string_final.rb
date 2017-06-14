@@ -3,27 +3,46 @@ class String
 
   def objectify
     if needs_div_simplification?
-      p 'yo'
       div = objectify_division
-      return div
+      return callback_objectify(div)
     end
 
     if needs_add_simplification?
       add = objectify_addition
-      return add
+      return callback_objectify(add)
     end
 
     if needs_mult_simplification?
       mult = objectify_multiplication
-      return mult
+      return callback_objectify(mult)
     end
   end
 
   def objectify_division
     simplified = simplify_expression
     division_args = simplified[:matches]
-    cleaned_args=clean_args(division_args)
-    div_expression = div(cleaned_args)
+
+    div_expression = div(division_args)
+    p div_expression
+    return div_expression
+  end
+
+  def objectify_addition
+    simplified = simplify_expression
+    string = simplified[:expression]
+    matches = simplified[:matches]
+    string.gsub!(/-/,'+-')
+    add_equation_args = string.scan(/[^\+]+/)
+    add_equation_args.each_with_index do |string, i|
+      # add_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
+      add_equation_args[i].gsub!(/\$/) {  '('+matches.shift+')'  }
+    end
+    add_expression = add(add_equation_args)
+    p add_expression
+
+    return add_expression
+
+    # return recall_objectify(add_expression)
   end
 
   def simplify_expression
@@ -39,13 +58,28 @@ class String
   end
 
   def objectify_multiplication
-    string = self.dup
+    simplified = simplify_expression
+    string = simplified[:expression]
+    matches = simplified[:matches]
+
     string.sub!(/-/, '-1') if (string =~ /-[a-zA-Z]/) == 0
     mult_args_regex = /-?[a-zA-Z$£]|-?[0-9]+/
     mult_equation_args = string.scan(mult_args_regex)
-    cleaned_args = clean_args(mult_equation_args)
-    mult_expression = mtp(cleaned_args)
+    mult_equation_args.each_with_index do |string, i|
+      # add_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
+      mult_equation_args[i].gsub!(/\$/) {  '('+matches.shift+')'  }
+    end
+    mult_expression = mtp(mult_equation_args)
+    p mult_expression
     return mult_expression
+  end
+
+  def needs_simplification?(input_expression)
+    string=input_expression.dup
+    div  = string.needs_div_simplification?
+    mult = string.needs_mult_simplification?
+    add = string.needs_add_simplification?
+    div||add||mult
   end
 
   def needs_div_simplification?
@@ -54,15 +88,17 @@ class String
   end
 
   def needs_mult_simplification?
-    string = self.dup
+    simplified = simplify_expression
+    string = simplified[:expression]
     leading_minus_mult = (string =~ /-[a-zA-Z$£]/) == 0
     string.gsub!(/-/,'+-')
-    mult_regex = /(?:-?[0-9]+[a-zA-Z](?:[\w]*))|(?:-?[a-zA-Z]+[0-9]+(?:[\w]*))|(?:-?[a-zA-Z$£][a-zA-Z£$]+(?:[\w]*))|-[a-zA-Z$£]/
+    mult_regex = /(?:-?[0-9]+[a-zA-Z£$](?:[\w]*))|(?:-?[a-zA-Z£$]+[0-9]+(?:[\w]*))|(?:-?[a-zA-Z$£][a-zA-Z£$]+(?:[\w]*))|-[a-zA-Z$£]/
     any_matches = !string.scan(mult_regex).empty?
   end
 
   def needs_add_simplification?
-    string = self.dup
+    simplified = simplify_expression
+    string = simplified[:expression]
     string.sub!(/-/, '') if (string =~ /-/) == 0
     string.gsub!(/-/,'+-')
     string.gsub!(mult_regex = /(?:-?[0-9]+[a-zA-Z](?:[\w]*))|(?:-?[a-zA-Z]+[0-9]+(?:[\w]*))|(?:-?[a-zA-Z$£][a-zA-Z£$]+(?:[\w]*))/, '$')
@@ -70,19 +106,39 @@ class String
     a_match = !!( add_regex =~ string)
   end
 
-  def objectify_addition
-    string = self.dup
-    string.gsub!(/-/,'+-')
-    add_equation_args = string.scan(/[^\+]+/)
-    cleaned_args = clean_args(add_equation_args)
-    add_expression = add(cleaned_args)
-    # return recall_objectify(add_expression)
-  end
 
   def clean_args(arg_array)
     arg_array.each_with_index do |string, i|
       arg_array[i] = string.to_i if !!(/\d/=~string)
     end
+  end
+
+  def callback_objectify(expression)
+    expression.args.each_with_index do |string, i|
+      p string
+      if needs_simplification(string)
+        string = remove_external_parentheses_when_required(string)
+        expression.args[i] = string.objectify
+      else
+        expression.args[i]= string.to_i if /\d/=~string
+      end
+    end
+    return expression
+  end
+
+  def remove_external_parentheses_when_required(input_expression)
+
+    string = input_expression.dup
+    simplify = Simplify.new(string.dup)
+    #this is order dependent
+    internal_string = simplify.extract_string_between('(',')')
+    simplified = simplify.expression
+    matches = simplify.replaced_content
+
+    if simplified == '$'
+      return internal_string
+    end
+    string
   end
 
 end

@@ -38,12 +38,12 @@ describe 'Simplifier' do
   describe '#parentheses_content' do
     it 'simplifies the contents of parentheses' do
       simplify = Simplify.new('2(a)b')
-      result = '2($)b'
+      result = '2$b'
       expect(simplify.parentheses_content).to eq result
     end
     it 'simplifies the contents of parentheses with nesting' do
       simplify = Simplify.new('2(a(a(b)(sx)))b')
-      result = '2($)b'
+      result = '2$b'
       expect(simplify.parentheses_content).to eq result
     end
   end

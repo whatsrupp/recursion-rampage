@@ -18,7 +18,6 @@ class Simplify
 
   def string_search
     @string.each_char do |character|
-      p character
       if character == '\\'
         fractions
         string_search
@@ -67,8 +66,9 @@ class Simplify
 
   def parentheses_content
     inner_string =extract_string_between('(',')')
+    store_matches(inner_string)
     bracketed_string = '('+inner_string+')'
-    string.sub!(bracketed_string, '($)')
+    string.sub!(bracketed_string, '$')
   end
 
   def extract_string_between(left_character, right_character)

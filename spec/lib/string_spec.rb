@@ -74,25 +74,25 @@ describe String do
       end
     end
 
-    # context 'mixed stack lvl 2' do
-    #   it 'objectifies \frac{-14a}{2+x}' do
-    #     input = '\frac{-14a}{2+x}'
-    #     expected_output = div(mtp(-14,'a'),add(2,'x'))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies \frac{a+2}{-d}' do
-    #     input = '\frac{a+2}{-d}'
-    #     expected_output = div(add('a', 2), mtp(-1, 'd'))
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    #
-    #   it 'objectifies 3(x+7)+4' do
-    #     input = '3(x+7)+4'
-    #     expected_output = add(mtp(3,add('x', 7)), 4)
-    #     expect(input.objectify).to eq expected_output
-    #   end
-    # end
+    context 'mixed stack lvl 2' do
+      it 'objectifies \frac{-14a}{2+x}' do
+        input = '\frac{-14a}{2+x}'
+        expected_output = div(mtp(-14,'a'),add(2,'x'))
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies \frac{a+2}{-d}' do
+        input = '\frac{a+2}{-d}'
+        expected_output = div(add('a', 2), mtp(-1, 'd'))
+        expect(input.objectify).to eq expected_output
+      end
+
+      it 'objectifies 3(x+7)+4' do
+        input = '3(x+7)+4'
+        expected_output = add(mtp(3,add('x', 7)), 4)
+        expect(input.objectify).to eq expected_output
+      end
+    end
     # #
     # context 'mixed stack lvl 3' do
     #   it 'objectifies 2(x+\frac{3}{y})w' do
