@@ -16,7 +16,7 @@ require './lib/simplifier'
 # require './lib/string'
 require './lib/state_checker'
 require './lib/math_regexes'
-require './lib/string'
+require './lib/string_final'
 
 
 #FOR TESTING MAKE SURE TO REMOVE!

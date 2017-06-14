@@ -8,6 +8,7 @@ class String
     #If Not - return the string as the answer
     return expression_string unless expression_string.needs_simplification
 
+    top_level_simplified_string
     #simplify the string into top level expression
     type_of_expression = classify(expression_string)
     # Class-name

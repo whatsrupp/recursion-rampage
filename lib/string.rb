@@ -11,7 +11,6 @@ class String
     #Returns only digits including minus digits
     digit_regex = /[\-|\d]/
 
-    #
     minus_regex = /(?:\-.*?(?=-))|(?:\-.*)/
     # simpler minus_regex? /-?(\w+)/
 
