@@ -34,7 +34,7 @@ class Simplify
 
   def fractions
     simplified_bracket_string = fraction_brackets
-    simplified_bracket_string.gsub!('\frac{$}{$}', '$')
+    simplified_bracket_string.gsub!('\frac{$}{$}', "£")
     simplified_bracket_string
   end
 

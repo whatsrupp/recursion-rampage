@@ -20,17 +20,17 @@ describe 'Simplifier' do
   describe '#fractions' do
     it 'simplifies entire fraction with no nesting' do
       simplify = Simplify.new('\frac{b}{a}')
-      result = '$'
+      result = "£"
       expect(simplify.fractions).to eq result
     end
     it 'simplifies entire fraction with nesting' do
       simplify = Simplify.new('\frac{\frac{a}{b}}{a}')
-      result = '$'
+      result = "£"
       expect(simplify.fractions).to eq result
     end
     it 'simplifies 1 non-nested fraction' do
       simplify = Simplify.new('\frac{a}{a}\frac{a}{b}')
-      result = '$\frac{a}{b}'
+      result = '£\frac{a}{b}'
       expect(simplify.fractions).to eq result
     end
   end
@@ -73,7 +73,7 @@ describe 'Simplifier' do
   describe '#expression' do
     it 'handles mixed stacks ' do
       simplify = Simplify.new('2\frac{}{}(\frac{a}{b})+1(a)')
-      result = '2$$+1$'
+      result = '2£$+1$'
       expect(simplify.expression).to eq result
     end
 

@@ -11,14 +11,14 @@ describe 'Classifier' do
     test_string = '\frac{-14a}{2+x}'
     expect(classifier.classify(test_string)).to eq(:div)
   end
-  it '3(x+7)+4' do
-    test_string = '3(x+7)+4'
-    expect(classifier.classify(test_string)).to eq(:add)
-  end
-  it '2(x+\frac{3}{y})w' do
-    test_string = '2(x+\frac{3}{y})w'
-    expect(classifier.classify(test_string)).to eq(:mult)
-  end
+  # it '3(x+7)+4' do
+  #   test_string = '3(x+7)+4'
+  #   expect(classifier.classify(test_string)).to eq(:add)
+  # end
+  # it '2(x+\frac{3}{y})w' do
+  #   test_string = '2(x+\frac{3}{y})w'
+  #   expect(classifier.classify(test_string)).to eq(:mult)
+  # end
 
 
   describe '#extract_string_from_outer_bracket' do
