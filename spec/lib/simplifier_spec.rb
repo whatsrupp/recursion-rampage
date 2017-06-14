@@ -6,7 +6,6 @@ describe 'Simplifier' do
     it 'simplifies a top level fraction into a dollar sign' do
       simplify = Simplify.new('\frac{a}{b}')
       result = '\frac{$}{$}'
-      binding.pry
       expect(simplify.fraction_brackets).to eq result
     end
 
@@ -15,6 +14,7 @@ describe 'Simplifier' do
       result = '\frac{$}{$}'
       expect(simplify.fraction_brackets).to eq result
     end
+
   end
 
   describe '#fractions' do
@@ -32,7 +32,6 @@ describe 'Simplifier' do
       simplify = Simplify.new('\frac{a}{a}\frac{a}{b}')
       result = '$$'
       expect(simplify.fractions).to eq result
-      binding.pry
     end
   end
 
@@ -85,8 +84,5 @@ describe 'Simplifier' do
       expect(simplify.expression).to eq result
     end
 
-    it 'makes a call to the parentheses function' do
-
-    end
   end
 end
