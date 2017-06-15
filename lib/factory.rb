@@ -27,10 +27,15 @@ module Factory
     BetweenBrackets.new('{','}', string)
   end
 
-  def objectify_addition_test(string)
-
-    addition = ObjectifyAddition.new(string)
-    object = addition.objectify
-    return object
+  def objectify_addition(string)
+    ObjectifyAddition.new(string).objectify
   end
+
+  def objectify_multiplication_test(string)
+    ObjectifyMultiplication.new(string).objectify
+  end
+
+
+
+
 end

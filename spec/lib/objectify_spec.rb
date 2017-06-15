@@ -34,5 +34,27 @@ describe ObjectifyDivision do
 end
 
 describe ObjectifyMultiplication do
+  it 'objectifies 2x' do
+    input = '2x'
+    expected_output = mtp('2', 'x')
+    expect(ObjectifyMultiplication.new(input).objectify).to eq expected_output
+  end
 
+  it 'objectifies -2ay' do
+    input = '-2ay'
+    expected_output = mtp('-2', 'a', 'y')
+    expect(ObjectifyMultiplication.new(input).objectify).to eq expected_output
+  end
+
+  it 'objectifies -a' do
+    input = '-a'
+    expected_output = mtp('-1', 'a')
+    expect(ObjectifyMultiplication.new(input).objectify).to eq expected_output
+  end
+
+  it 'objectifies uz24j78k9' do
+    input = 'uz24j78k9'
+    expected_output = mtp('u', 'z', '24', 'j', '78', 'k', '9')
+    expect(ObjectifyMultiplication.new(input).objectify).to eq expected_output
+  end
 end

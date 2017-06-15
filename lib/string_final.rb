@@ -8,12 +8,12 @@ class String
     end
 
     if needs_add_simplification?
-      add = objectify_addition_test(self)
+      add = objectify_addition(self)
       return callback_objectify(add)
     end
 
     if needs_mult_simplification?
-      mult = objectify_multiplication
+      mult = objectify_multiplication_test(self)
       return callback_objectify(mult)
     end
   end
@@ -31,23 +31,6 @@ class String
     return div_expression
   end
 
-  def objectify_addition
-    simplified = simplify_expression
-    string = simplified[:expression]
-    matches = simplified[:matches]
-    string.gsub!(/-/,'+-')
-    add_equation_args = string.scan(/[^\+]+/)
-    add_equation_args.each_with_index do |string, i|
-      add_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
-      add_equation_args[i].gsub!(/\{\$\}/) {  '{'+matches[:fractions].shift+'}'  }
-      add_equation_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
-    end
-    add_expression = add(add_equation_args)
-
-    return add_expression
-
-    # return recall_objectify(add_expression)
-  end
 
   def simplify_expression
     string = self.dup
@@ -61,23 +44,7 @@ class String
     return output
   end
 
-  def objectify_multiplication
-    simplified = simplify_expression
-    string = simplified[:expression]
-    matches = simplified[:matches]
-
-    string.sub!(/-/, '-1') if (string =~ /-[a-zA-Z$£]/) == 0
-    mult_args_regex = /-?[a-zA-Z$£]|-?[0-9]+/
-    mult_equation_args = string.scan(mult_args_regex)
-    mult_equation_args.each_with_index do |string, i|
-      mult_equation_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
-      mult_equation_args[i].gsub!(/\{\$\}/) {  '{'+matches[:parentheses].shift+'}'  }
-
-      mult_equation_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
-    end
-    mult_expression = mtp(mult_equation_args)
-    return mult_expression
-  end
+  
 
   def needs_simplification?(input_expression)
     string=input_expression.dup
