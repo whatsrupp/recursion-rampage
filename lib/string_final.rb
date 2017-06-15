@@ -135,7 +135,7 @@ class String
     string = input_expression.dup
     simplify = Simplify.new(string.dup)
     #this is order dependent
-    internal_string = simplify.extract_string_between('(',')')
+    internal_string = between_parentheses(string).extract
     simplified = simplify.expression
 
     if simplified == '$'

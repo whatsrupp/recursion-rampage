@@ -9,6 +9,7 @@ require './lib/state_checker'
 include Factory
 include StateChecker
 require './lib/simplifier'
+require './lib/between_brackets'
 
 
 # require './lib/string'

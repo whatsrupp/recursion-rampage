@@ -18,4 +18,12 @@ module Factory
   def pow(*args)
     Power.new(*args)
   end
+
+  def between_parentheses(string)
+    BetweenBrackets.new('(',')',string)
+  end
+
+  def between_curlies(string)
+    BetweenBrackets.new('{','}', string)
+  end
 end
