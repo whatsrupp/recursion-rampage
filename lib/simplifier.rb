@@ -110,39 +110,44 @@ end
 # It extracts the string between two brackets and returns the string
 class BetweenBrackets
 
-  attr_reader :bracket_count, :closing, :opening
+  attr_reader :bracket_count, :closing, :opening, :string
 
-  def initialize(left_bracket, right_bracket)
+  def initialize(left_bracket, right_bracket, string)
     @opening = left_bracket
     @closing = right_bracket
     @bracket_count = 0
     @match_indices = {}
+    @string = string
   end
 
-  def extract(string)
-    bracket_start_index = nil
+  def extract
 
     string.each_char.with_index do |char,index|
       if opening_bracket_match?(char)
-        if open_or_closing_bracket?
-          save_start_index(index)
-        end
-        increment_bracket_count
-      end
-      if closing_bracket_match?(char)
-        decrement_bracket_count
-        if open_or_closing_bracket?
-          save_end_index(index)
-          length = length_of_match
-          return extract_string_from_brackets(string)
-        end
+        opening_updates(index)
+      elsif closing_bracket_match?(char)
+         closing_updates(index)
+         return extract_string_from_brackets if @match_indices[:end]
       end
     end
-
     string
   end
 
-  def extract_string_from_brackets(string)
+  def opening_updates(index)
+    if open_or_closing_bracket?
+      save_start_index(index)
+    end
+    increment_bracket_count
+  end
+
+  def closing_updates(index)
+    decrement_bracket_count
+    if open_or_closing_bracket?
+      save_end_index(index)
+    end
+  end
+
+  def extract_string_from_brackets
     string[@match_indices[:start]+1, length_of_match-1]
   end
 
@@ -177,6 +182,5 @@ class BetweenBrackets
   def open_or_closing_bracket?
     bracket_count == 0
   end
-
 
 end

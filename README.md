@@ -1,5 +1,37 @@
 # Objectify Tech Test
 
+## Nick Rupp Post-Tech Test Notes
+
+1) I found this to be a difficult but interesting problem. Lots of layers of complexity!
+ However, I have learnt a lot about how useful regex and recursion can be!
+
+2) However, one of the reasons I took so long over this was that I wanted to find a way to do everything with regex, and I think that's because you strongly recommended using regex. I felt, and I could be wrong, that regex was inappropriate for dealing with extracting string info between strings with nested search criteria in them. Ie. nested brackets (2(3x(xs))). If you have a way to do this with Regex capture groups I'd be really interested to see it!
+
+3) I didn't manage to get the power simplification done, however, I get that it's a similar concept and it's almost checking to see how extendable the code base is. In my case, fairly unextendable. For that reason, I decided to go for some refactoring over adding on the power refactoring but then ran out of time.
+
+4) I first found out what the 'top level' expression from the starting string was:
+ie:
+\frac{3x+5}{5+54} -> div
+2x(\frac{2}{3}) -? mtp
+3x+7 -> add
+
+I then simplified and separated the different arguments
+3x+7 -> add($,7)
+
+and then resubituted back any simplifications
+ add($,7) -> (3x,7)
+
+ This was then called recursively on each argument until no more simplification
+ needed to be done.
+
+ Concerns:
+ The top down approach seemed backwards, as when working with maths, I'm wondering whether it would have been better to start with the smallest sections first!
+ Looking at the latex language, substitutions like '$' could conflict with other expressions
+ I just feel like it could be done much more concisely, as with anything, so would love to see a
+ good version of this codebase!
+
+
+
 ### Description
 In order to make your team more efficient in writing well-tested code, you have been tasked to develop an **extremely important** utility that converts a string which is the LaTeX syntax for a mathematical expression into the relevant Ruby objects.  It is estimated this utility method improves overall code writing productivity by 5-10%!
 
