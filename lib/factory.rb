@@ -31,10 +31,13 @@ module Factory
     ObjectifyAddition.new(string).objectify
   end
 
-  def objectify_multiplication_test(string)
+  def objectify_multiplication(string)
     ObjectifyMultiplication.new(string).objectify
   end
 
+  def objectify_division(string)
+    ObjectifyDivision.new(string).objectify
+  end
 
 
 

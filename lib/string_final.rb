@@ -3,7 +3,7 @@ class String
 
   def objectify
     if needs_div_simplification?
-      div = objectify_division
+      div = objectify_division(self)
       return callback_objectify(div)
     end
 
@@ -13,24 +13,10 @@ class String
     end
 
     if needs_mult_simplification?
-      mult = objectify_multiplication_test(self)
+      mult = objectify_multiplication(self)
       return callback_objectify(mult)
     end
   end
-
-
-  def objectify_power
-    simplified = simplify_expression
-  end
-
-  def objectify_division
-    simplified = simplify_expression
-    division_args = simplified[:matches][:fractions]
-
-    div_expression = div(division_args)
-    return div_expression
-  end
-
 
   def simplify_expression
     string = self.dup
@@ -44,7 +30,7 @@ class String
     return output
   end
 
-  
+
 
   def needs_simplification?(input_expression)
     string=input_expression.dup

@@ -30,6 +30,23 @@ describe ObjectifyAddition do
 end
 
 describe ObjectifyDivision do
+  it 'objectifies \frac{-14}{25}' do
+    input = '\frac{-14}{25}'
+    expected_output = div('-14', '25')
+    expect(ObjectifyDivision.new(input).objectify).to eq expected_output
+  end
+
+  it 'objectifies \frac{a}{d}' do
+    input = '\frac{a}{d}'
+    expected_output = div('a', 'd')
+    expect(ObjectifyDivision.new(input).objectify).to eq expected_output
+  end
+
+  it 'objectifies \frac{x}{-25}' do
+    input = '\frac{x}{-25}'
+    expected_output = div('x', '-25')
+    expect(ObjectifyDivision.new(input).objectify).to eq expected_output
+  end
 
 end
 
