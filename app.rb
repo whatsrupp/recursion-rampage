@@ -4,6 +4,13 @@ require './models/multiplication'
 require './models/division'
 require './models/power'
 
+
+require './models/objectifiers/objectify_superclass'
+require './models/objectifiers/addition'
+require './models/objectifiers/multiplication'
+require './models/objectifiers/division'
+
+
 require './lib/factory'
 require './lib/state_checker'
 include Factory
