@@ -1,9 +1,8 @@
 ---
 DuplicateMethodCall:
   exclude:
-  - Classifier#extract_string_from_outer_bracket
   # - Simplify#extract_string_between
-  - Simplify#fraction_brackets
+  # - Simplify#fraction_brackets
   - String#objectify
   - String#recall_objectify
   - String#callback_objectify
