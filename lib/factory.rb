@@ -39,6 +39,19 @@ module Factory
     ObjectifyDivision.new(string).objectify
   end
 
+  # Probably shouldnt be here
+  def simplify_expression(input_string)
+    string = input_string.dup
+    simplify = Simplify.new(string)
+    simplified_expression = simplify.expression
+    replaced_content = simplify.replaced_content
+    output = {
+      expression: simplified_expression,
+      matches: replaced_content
+    }
+    return output
+  end
+
 
 
 end

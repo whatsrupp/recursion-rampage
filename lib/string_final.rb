@@ -18,20 +18,6 @@ class String
     end
   end
 
-  def simplify_expression
-    string = self.dup
-    simplify = Simplify.new(string)
-    simplified_expression = simplify.expression
-    replaced_content = simplify.replaced_content
-    output = {
-      expression: simplified_expression,
-      matches: replaced_content
-    }
-    return output
-  end
-
-
-
   def needs_simplification?(input_expression)
     string=input_expression.dup
     div  = string.needs_div_simplification?
@@ -41,12 +27,12 @@ class String
   end
 
   def needs_div_simplification?
-    simplified = simplify_expression
+    simplified = simplify_expression(self)
     simplified[:expression] == "£"
   end
 
   def needs_mult_simplification?
-    simplified = simplify_expression
+    simplified = simplify_expression(self)
     string = simplified[:expression]
     leading_minus_mult = (string =~ /-[a-zA-Z$£]/) == 0
     string.gsub!(/-/,'+-')
@@ -55,7 +41,7 @@ class String
   end
 
   def needs_add_simplification?
-    simplified = simplify_expression
+    simplified = simplify_expression(self)
     string = simplified[:expression]
     string.sub!(/-/, '') if (string =~ /-/) == 0
     string.gsub!(/-/,'+-')
