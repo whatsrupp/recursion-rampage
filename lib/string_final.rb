@@ -20,10 +20,10 @@ class String
 
   def needs_simplification?(input_expression)
     string=input_expression.dup
-    div  = string.needs_div_simplification?
-    mult = string.needs_mult_simplification?
-    add = string.needs_add_simplification?
-    div||add||mult
+    return true if string.needs_div_simplification?
+    return true if string.needs_mult_simplification?
+    return true if string.needs_add_simplification?
+    return false
   end
 
   def needs_div_simplification?
@@ -47,6 +47,8 @@ class String
     string.gsub!(/-/,'+-')
     string.gsub!(mult_regex = /(?:-?[0-9]+[a-zA-Z](?:[\w]*))|(?:-?[a-zA-Z]+[0-9]+(?:[\w]*))|(?:-?[a-zA-Z$£][a-zA-Z£$]+(?:[\w]*))/, '$')
     add_regex = /\+/
+    unary_regex =/[\+-]@/
+    not_unary = string.scan(unary_regex).empty?
     a_match = !!( add_regex =~ string)
   end
 
