@@ -1,3 +1,4 @@
+#Super class for expression objects 
 class Expression
   attr_accessor :args
 #* mean multiple parameters: 'Splat operator'

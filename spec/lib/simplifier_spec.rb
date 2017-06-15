@@ -35,6 +35,10 @@ describe 'Simplifier' do
     end
   end
 
+  describe '#powers' do
+
+  end
+
   describe '#parentheses_content' do
     it 'simplifies the contents of parentheses' do
       simplify = Simplify.new('2(a)b')

@@ -18,12 +18,16 @@ class String
     end
   end
 
+
+  def objectify_power
+    simplified = simplify_expression
+  end
+
   def objectify_division
     simplified = simplify_expression
     division_args = simplified[:matches][:fractions]
 
     div_expression = div(division_args)
-    p div_expression
     return div_expression
   end
 
@@ -39,7 +43,6 @@ class String
       add_equation_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
     end
     add_expression = add(add_equation_args)
-    p add_expression
 
     return add_expression
 
@@ -73,7 +76,6 @@ class String
       mult_equation_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
     end
     mult_expression = mtp(mult_equation_args)
-    p mult_expression
     return mult_expression
   end
 
@@ -118,7 +120,6 @@ class String
 
   def callback_objectify(expression)
     expression.args.each_with_index do |string, i|
-      p string
       if needs_simplification(string)
         string = remove_external_parentheses_when_required(string)
         expression.args[i] = string.objectify

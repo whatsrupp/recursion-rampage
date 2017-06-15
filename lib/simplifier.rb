@@ -103,4 +103,5 @@ class Simplify
     return string
   end
 
+
 end

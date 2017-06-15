@@ -1,3 +1,4 @@
+#class to contain the arguments of division expressions
 class Division < Expression
   def post_init(args)
     if self.args[2].nil?

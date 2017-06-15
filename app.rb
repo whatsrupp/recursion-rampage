@@ -6,10 +6,8 @@ require './models/power'
 
 require './lib/factory'
 require './lib/state_checker'
-require './lib/classifier'
 include Factory
 include StateChecker
-include Classifier
 require './lib/simplifier'
 
 

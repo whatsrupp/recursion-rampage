@@ -1,4 +1,6 @@
+#class to contain the arguments of power expressions
 class Power < Expression
+
   def base
     args[0]
   end
