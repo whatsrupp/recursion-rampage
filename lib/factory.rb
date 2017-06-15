@@ -26,4 +26,11 @@ module Factory
   def between_curlies(string)
     BetweenBrackets.new('{','}', string)
   end
+
+  def objectify_addition_test(string)
+
+    addition = ObjectifyAddition.new(string)
+    object = addition.objectify
+    return object
+  end
 end

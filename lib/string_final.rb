@@ -8,7 +8,7 @@ class String
     end
 
     if needs_add_simplification?
-      add = objectify_addition
+      add = objectify_addition_test(self)
       return callback_objectify(add)
     end
 

@@ -20,7 +20,7 @@ class Objectify
   def resubstitute_args(expression_args, matches)
     expression_args.each_with_index do |string, i|
       expression_args[i].gsub!(/\£/) {  '\frac{$}{$}'  }
-      expression_args[i].gsub!(/\{\$\}/) {  '{'+matches[:parentheses].shift+'}'  }
+      expression_args[i].gsub!(/\{\$\}/) {  '{'+matches[:fractions].shift+'}'  }
       expression_args[i].gsub!(/\$/) {  '('+matches[:parentheses].shift+')'  }
     end
   end
