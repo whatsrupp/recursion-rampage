@@ -25,11 +25,11 @@ and then resubituted back any simplifications
  needed to be done.
 
  Concerns:
- The top down approach seemed backwards, as when working with maths, I'm wondering whether it would have been better to start with the smallest sections first!
+ The top down approach seemed backwards, I'm wondering whether it would have been better to start with the smallest sections first as it is normally done when doing calculations!
  Looking at the latex language, substitutions like '$' could conflict with other expressions
  I just feel like it could be done much more concisely, as with anything, so would love to see a
  good version of this codebase!
-
+ 
 
 
 ### Description

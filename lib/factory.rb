@@ -1,3 +1,4 @@
+# Module for creating disposable class instances
 module Factory
   def add(*args)
     Addition.new(*args)
@@ -39,7 +40,6 @@ module Factory
     ObjectifyDivision.new(string).objectify
   end
 
-  # Probably shouldnt be here
   def simplify_expression(input_string)
     string = input_string.dup
     simplify = Simplify.new(string)

@@ -1,7 +1,7 @@
+#Take an expression string and replace the top level parentheses and  fractions with
+#unique symbols
 class Simplify
 
-  #Take an expression string and replace the top level parentheses and  fractions with
-  #unique symbols
 
   attr_reader :replaced_content
   attr_reader :string
@@ -47,7 +47,6 @@ class Simplify
     elsif type == '('
       @replaced_content[:parentheses] << matched_string
     end
-
   end
 
   def fraction_brackets
